@@ -15,6 +15,13 @@ if __name__ == "__main__":
         # time_interval = 4
         print("Scraping Business urls. Please wait..")
         bizz_urls = await all_business_urls(url)
+        print(f"DEBUG: Found {len(bizz_urls)} business URLs")
+        print(f"DEBUG: First few URLs: {bizz_urls[:3] if bizz_urls else 'None'}")
+        
+        if not bizz_urls:
+            print("DEBUG: No business URLs found, stopping here")
+            return None
+            
         print("Scraping datas.")
         scrape_datas = await scrapeMe(bizz_urls)        
         return scrape_datas

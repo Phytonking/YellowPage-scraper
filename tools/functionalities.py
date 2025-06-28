@@ -4,8 +4,20 @@ import yaml
 import random
 
 
-def yp_lists(yp_url):
-    total_page_urls = [f"{yp_url}&page={num}" for num in range(1, 101)]
+def yp_lists(yp_url, max_pages=100):
+    """
+    Generate page URLs for pagination
+    
+    Args:
+        yp_url: Base URL for Yellow Pages search
+        max_pages: Maximum number of pages to generate (default: 100)
+    
+    Returns:
+        List of page URLs
+    """
+    total_page_urls = [f"{yp_url}&page={num}" for num in range(1, max_pages + 1)]
+    print(f"DEBUG: Generated {len(total_page_urls)} page URLs (max_pages={max_pages})")
+    print(f"DEBUG: First few URLs: {total_page_urls[:3]}")
     return total_page_urls
 
 # random time interval between each requests made to server:
@@ -34,6 +46,7 @@ def verify_yellow(yp_url):
 def yaml_by_select(selectors):
     with open(f"scrapers//{selectors}.yml") as file:
         sel = yaml.load(file, Loader=yaml.SafeLoader)
+        print(f"DEBUG: Loaded YAML selectors: {list(sel.keys())}")
         return sel
 
 
